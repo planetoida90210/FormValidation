@@ -7,6 +7,7 @@ class App extends Component {
     email: '',
     pass : '',
     accept: false,
+    message: '',
 
     errors: {
     username: false,
@@ -48,31 +49,32 @@ class App extends Component {
       e.preventDefault()
 
       const validation = this.formValidation()
-      console.log(validation)
-      // if(true) {
-      //   this.setState({
-      //     username: '',
-      //     email: '',
-      //     pass : '',
-      //     accept: false,
+      if(validation.correct) {
+        this.setState({
+          username: '',
+          email: '',
+          pass : '',
+          accept: false,
+          message: 'Formularz został wysłany',
       
-      //     errors: {
-      //     username: false,
-      //     email: false,
-      //     pass : false,
-      //     accept: false,
-      //     }
-      //   }) 
-      // } else {
-      //   this.setState({
-      //     errors: {
-      //       username: false,
-      //       email: false,
-      //       pass : false,
-      //       accept: false,
-      //       }
-      //   })
-      // }
+          errors: {
+          username: false,
+          email: false,
+          pass : false,
+          accept: false,
+          }  
+        }) 
+        console.log('formularz wysłany')
+      } else {
+        this.setState({
+          errors: {
+            username: !validation.username,
+            email: !validation.email,
+            pass : !validation.password,
+            accept: !validation.accept,
+            }
+        })
+      }
     }
 
     formValidation = () => {
@@ -109,7 +111,14 @@ class App extends Component {
         accept,
         correct
       })
+    }
 
+    componentDidUpdate() {
+      if(this.state.message !== ""){
+        setTimeout(()=> this.setState({
+          message: '',
+        }) , 3000)
+      }
     }
 
   render() { 
@@ -161,6 +170,7 @@ class App extends Component {
           {this.state.errors.accept && <span>{this.messages.accept_incorrect}</span>}
           <button>zapisz się</button>
         </form>
+    {this.state.message && <h3>{this.state.message}</h3>}
       </div>
      );
   }
