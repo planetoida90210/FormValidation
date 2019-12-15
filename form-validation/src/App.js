@@ -58,7 +58,7 @@ class App extends Component {
           email: '',
           pass : '',
           accept: false,
-          message: 'Formularz został wysłany',
+          message: 'Signup complete!',
       
           errors: {
           username: false,
@@ -130,7 +130,8 @@ class App extends Component {
         <div className="info">
           <h2>Classic Game Moves</h2>
           <FontAwesomeIcon className='fa' icon={faGamepad} />
-          <p>Are you ready for journey?</p>
+          
+          {this.state.message ? <p className='formSend'>{this.state.message}</p> : <p className='formSend'>Are you ready for journey?</p>  }
         </div>
         <form className='signupForm' onSubmit={this.handleSubmit} noValidate>
           <h2>Sign up</h2>
@@ -184,7 +185,6 @@ class App extends Component {
           {this.state.errors.accept && <span>{this.messages.accept_incorrect}</span>}
           <button>sign up</button>
         </form>
-    {this.state.message && <h3>{this.state.message}</h3>}
       </div>
      );
   }
